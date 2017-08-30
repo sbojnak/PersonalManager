@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DataAccessLayer;
 using DataAccessLayer.Wallet;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests
+namespace Tests
 {
     [TestClass]
     public class DataAccessLayerTests
@@ -139,6 +141,38 @@ namespace UnitTests
                 dbContext.SaveChanges();
                 Assert.IsTrue(CompareTransactions(transaction, storedTransaction),
                     $"{transaction} is not the same as {storedTransaction}");
+            }
+        }
+
+        [TestMethod]
+        public void AddAccountAndAccountBalance()
+        {
+            using (var dbContext = new PersonalManagerDbContext())
+            {
+                var account = new Account
+                {
+                    AccountName = "Account 5465",
+                    AccountType = "Test type 2",
+                    Balance = -51.2,
+                    CreationTime = DateTime.Now,
+                    Currency = "Dollar"
+                };
+                var accountBalance = new AccountBalance
+                {
+                    Balance = -65421.74,
+                    UpdateTime = DateTime.Now
+                };
+                account.AccountBalance.Add(accountBalance);
+                dbContext.Accounts.Add(account);
+                dbContext.SaveChanges();
+                var storedAccount = dbContext.Accounts.Find(account.AccountId);
+                var storedAccountBalance = dbContext.AccountBalances.Find(accountBalance.AccountBalanceId);
+                var listOfBalances = new List<AccountBalance>(storedAccount.AccountBalance);
+                dbContext.AccountBalances.Remove(storedAccountBalance);
+                dbContext.Accounts.Remove(storedAccount);
+                dbContext.SaveChanges();
+                Assert.IsTrue(CompareAccountBalances(storedAccountBalance, listOfBalances.First()),
+                    "AccountBalance of Account has not been properly set");
             }
         }
     }

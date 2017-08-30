@@ -13,5 +13,11 @@ namespace DataAccessLayer.Wallet
         public string Currency { get; set; }
         public virtual List<AccountBalance> AccountBalance { get; set; }
         public virtual List<Transaction> Transactions { get; set; }
+
+        public Account()
+        {
+            AccountBalance = new List<AccountBalance>();
+            Transactions = new List<Transaction>();
+        }
     }
 }
