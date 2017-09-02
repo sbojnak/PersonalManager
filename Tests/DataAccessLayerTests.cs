@@ -109,7 +109,7 @@ namespace Tests
                 Account storedAccount = dbContext.Accounts.Find(account.AccountId);
                 dbContext.Accounts.Remove(storedAccount);
                 dbContext.SaveChanges();
-                Assert.IsTrue(CompareAccounts(account, storedAccount), 
+                Assert.IsTrue(CompareAccounts(account, storedAccount),
                     $"{account} is not the same as {storedAccount}");
             }
         }
@@ -173,6 +173,39 @@ namespace Tests
                 dbContext.SaveChanges();
                 Assert.IsTrue(CompareAccountBalances(storedAccountBalance, listOfBalances.First()),
                     "AccountBalance of Account has not been properly set");
+            }
+        }
+
+        [TestMethod]
+        public void AddAccountAndTransaction()
+        {
+            using (var dbContext = new PersonalManagerDbContext())
+            {
+                var account = new Account
+                {
+                    AccountName = "Account 5465",
+                    AccountType = "Test type 2",
+                    Balance = -51.2,
+                    CreationTime = DateTime.Now,
+                    Currency = "Dollar"
+                };
+                var transaction = new Transaction()
+                {
+                    Amount = -530.151,
+                    IsIncome = false,
+                    TransactionType = "Shopping dafdsafsadfadsdv"
+                };
+                account.Transactions.Add(transaction);
+                dbContext.Accounts.Add(account);
+                dbContext.SaveChanges();
+                var storedAccount = dbContext.Accounts.Find(account.AccountId);
+                var storedTransaction = dbContext.Transactions.Find(transaction.TransactionId);
+                var listOfTransactions = new List<Transaction>(storedAccount.Transactions);
+                dbContext.Transactions.Remove(storedTransaction);
+                dbContext.Accounts.Remove(storedAccount);
+                dbContext.SaveChanges();
+                Assert.IsTrue(CompareTransactions(storedTransaction, listOfTransactions.First()),
+                    "Transaction of Account has not been properly set");
             }
         }
     }
