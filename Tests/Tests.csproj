@@ -64,7 +64,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccessLayerTests.cs" />
+    <Compile Include="DataAccessLayerTests\UserTests.cs" />
+    <Compile Include="DataAccessLayerTests\WalletTests.cs" />
+    <Compile Include="Helper\EntitiesComparator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

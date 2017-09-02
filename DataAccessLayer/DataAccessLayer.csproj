@@ -60,11 +60,11 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PersonalManagerDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User\Role.cs" />
-    <Compile Include="User\User.cs" />
-    <Compile Include="User\UserClaim.cs" />
-    <Compile Include="User\UserLogin.cs" />
-    <Compile Include="User\UserRole.cs" />
+    <Compile Include="UserIdentity\Role.cs" />
+    <Compile Include="UserIdentity\User.cs" />
+    <Compile Include="UserIdentity\UserClaim.cs" />
+    <Compile Include="UserIdentity\UserLogin.cs" />
+    <Compile Include="UserIdentity\UserRole.cs" />
     <Compile Include="Wallet\Account.cs" />
     <Compile Include="Wallet\AccountBalance.cs" />
     <Compile Include="Wallet\Transaction.cs" />

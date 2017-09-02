@@ -5,12 +5,12 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataAccessLayer.User;
+using DataAccessLayer.UserIdentity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DataAccessLayer
 {
-    public class PersonalManagerDbContext : IdentityDbContext<User.User, Role, int, UserLogin, UserRole, UserClaim>
+    public class PersonalManagerDbContext : IdentityDbContext<UserIdentity.User, Role, int, UserLogin, UserRole, UserClaim>
     {
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
@@ -24,7 +24,7 @@ namespace DataAccessLayer
             modelBuilder.Entity<UserRole>().HasKey(p => new {p.RoleId, p.UserId});
             modelBuilder.Entity<UserLogin>().HasKey(p => p.UserId);
 
-        modelBuilder.Entity<User.User>()
+        modelBuilder.Entity<UserIdentity.User>()
                 .ToTable("Users");
 
             modelBuilder.Entity<Role>()
